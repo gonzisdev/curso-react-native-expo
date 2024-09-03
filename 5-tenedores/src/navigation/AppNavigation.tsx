@@ -1,26 +1,27 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import { Icon } from "@rneui/base"
-import { AccountScreen } from "../screens/AccountScreen"
-import { FavoritesScreen } from "../screens/FavoritesScreen"
-import { RankingScreen } from "../screens/RankingScreen"
-import { RestaurantsScreen } from "../screens/RestaurantsScreen"
-import { SearchScreen } from "../screens/SearchScreen"
 import { screen } from "../utils/screenName"
+import { RestaurantStack } from "./RestaurantStack"
+import { FavoritesStack } from "./FavoritesStack"
+import { RankingStack } from "./RankingStack"
+import { SearchStack } from "./SearchStack"
+import { AccountStack } from "./AccountStack"
 
 const Tab = createBottomTabNavigator()
 
 export const AppNavigation = () => {
   return (
     <Tab.Navigator screenOptions={({route}) => ({
+        headerShown: false,
         tabBarActiveTintColor: "#00a680",
         tabBarInactiveTintColor: "#646464",
         tabBarIcon: ({color, size}) => screenOptions(route, color, size)
     })}>
-        <Tab.Screen name={screen.restaurant.tab} component={RestaurantsScreen} options={{title: "Restaurantes"}} />
-        <Tab.Screen name={screen.favorites.tab} component={FavoritesScreen} options={{title: "Favoritos"}} />
-        <Tab.Screen name={screen.ranking.tab} component={RankingScreen} options={{title: "Ranking"}} />
-        <Tab.Screen name={screen.search.tab} component={SearchScreen} options={{title: "Buscador"}} />
-        <Tab.Screen name={screen.account.tab} component={AccountScreen} options={{title: "Cuenta"}} />
+        <Tab.Screen name={screen.restaurant.tab} component={RestaurantStack} options={{title: "Restaurantes" }} />
+        <Tab.Screen name={screen.favorites.tab} component={FavoritesStack} options={{title: "Favoritos"}} />
+        <Tab.Screen name={screen.ranking.tab} component={RankingStack} options={{title: "Ranking"}} />
+        <Tab.Screen name={screen.search.tab} component={SearchStack} options={{title: "Buscador"}} />
+        <Tab.Screen name={screen.account.tab} component={AccountStack} options={{title: "Cuenta"}} />
     </Tab.Navigator>
   )
 }
@@ -46,6 +47,5 @@ const screenOptions = (route: {name: string}, color: string, size: number): Reac
 
     return (
         <Icon type="material-community" name={iconName} color={color} size={size} />
-
     )
 }
