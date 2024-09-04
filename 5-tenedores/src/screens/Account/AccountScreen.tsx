@@ -1,12 +1,12 @@
-import { View, Text } from "react-native"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useEffect, useState } from "react"
 import { UserGuestScreen } from "./UserGuestScreen"
 import { UserLoggedScreen } from "./UserLoggedScreen"
+import { LoadingModal } from "../../components/Shared/LoadingModal/LoadingModal"
 
 export const AccountScreen = () => {
 
-  const [hasLogged, setHasLogged] = useState(false)
+  const [hasLogged, setHasLogged] = useState<boolean | null>(null)
 
   useEffect(() => {
     const auth = getAuth()
@@ -14,6 +14,10 @@ export const AccountScreen = () => {
       setHasLogged(user ? true : false)
     })
   }, [])
+
+  if (hasLogged === null) {
+    return <LoadingModal show={true} text="Cargando" />
+  }
 
   return hasLogged ? <UserLoggedScreen /> : <UserGuestScreen />
 }
