@@ -1,6 +1,6 @@
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useEffect, useState } from "react"
-import { UserGuestScreen } from "./UserGuestScreen"
+import { UserGuestScreen } from "./UserGuestScreen/UserGuestScreen"
 import { UserLoggedScreen } from "./UserLoggedScreen"
 import { LoadingModal } from "../../components/Shared/LoadingModal/LoadingModal"
 

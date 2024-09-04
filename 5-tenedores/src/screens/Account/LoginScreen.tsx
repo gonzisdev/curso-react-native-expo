@@ -1,9 +1,9 @@
 import { View, Text } from 'react-native'
 
-export const UserGuestScreen = () => {
+export default function LoginScreen() {
   return (
     <View>
-      <Text>UserGuestScreen</Text>
+      <Text>LoginScreen</Text>
     </View>
   )
 }

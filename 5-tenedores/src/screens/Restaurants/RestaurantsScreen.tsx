@@ -2,7 +2,7 @@ import { View, Text } from "react-native"
 import { Button } from "@rneui/base"
 import { screen } from "../../utils/screenName"
 
-type RestaurantsScreenProps = {
+type RestaurantsScreenProps = {  // No hacer esto xD Tipar correctamente
   navigation: {
     navigate: (routeName: string) => void
   }
