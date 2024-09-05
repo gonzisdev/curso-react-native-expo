@@ -2,6 +2,7 @@ import { View } from 'react-native'
 import { Avatar, Text } from '@rneui/base'
 import { getAuth, User } from 'firebase/auth'
 import { styles } from './InfoUser.styles'
+import * as ImagePicker from 'expo-image-picker'
 
 export const InfoUser = () => {
 
@@ -10,8 +11,22 @@ export const InfoUser = () => {
   
     const { uid, photoURL, displayName, email } = user || {}
 
-    const changeAvatar = () => {
+    const changeAvatar = async () => {
+        const result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3]
+        })
+        if (!result.canceled) {
+            const asset = result.assets[0]
+            const uri = asset.uri
+            uploadImage(uri)
+        }
+    }
 
+    const uploadImage = (uri: string) => {
+        console.log(uri);
+        
     }
 
   return (
