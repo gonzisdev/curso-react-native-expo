@@ -5,7 +5,12 @@ import { getStorage, ref, uploadBytes } from "firebase/storage"
 import * as ImagePicker from 'expo-image-picker'
 import { styles } from './InfoUser.styles'
 
-export const InfoUser = () => {
+type InfoUserProps = {
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
+    setLoadingText: React.Dispatch<React.SetStateAction<string>>
+}
+
+export const InfoUser = ({setLoading, setLoadingText}: InfoUserProps) => {
 
     const auth = getAuth();
     const user: User | null = auth.currentUser
@@ -26,14 +31,21 @@ export const InfoUser = () => {
     }
 
     const uploadImage = async (uri: string) => {
+        setLoadingText('Actualizando avatar')
+        setLoading(true)
         const response = await fetch(uri)
         const blob = await response.blob()
 
         const storage = getStorage()
         const storageRef = ref(storage, `avatar/${uid}`)
         uploadBytes(storageRef, blob).then((snapshot) => {
-            console.log(snapshot.metadata)   
+            updatePhotoUrl(snapshot.metadata.fullPath)
         })
+    }
+
+    const updatePhotoUrl = (imagePath: string) => {
+        setLoading(false)
+        console.log(imagePath);
         
     }
 
