@@ -4,23 +4,27 @@ import { ListItem, Icon, Text } from '@rneui/base'
 import { Modal } from '../Shared/Modal/Modal'
 import { ChangeDisplayNameForm } from './ChangeDisplayNameForm/ChangeDisplayNameForm'
 
-type selectedComponents = {
+type SelectedComponents = {
     displayName: string
     email: string
     password: string
 }
 
-export const AccountOptions = () => {
+type AccountOptionsProps = {
+    onReload: () => void
+}
+
+export const AccountOptions = ({onReload}: AccountOptionsProps) => {
 
     const [showModal, setShowModal] = useState(false)
     const [renderCopmponent, setRenderComponent] = useState<JSX.Element | null>(null)
 
-    const onCloseOpenModal = () => setShowModal(prevState => !showModal)
+    const onCloseOpenModal = () => setShowModal(prevState => !prevState)
     
 
-    const selectedComponent = (key: keyof selectedComponents) => {
+    const selectedComponent = (key: keyof SelectedComponents) => {
         if (key === "displayName") {
-            setRenderComponent(<ChangeDisplayNameForm onClose={onCloseOpenModal} />)
+            setRenderComponent(<ChangeDisplayNameForm onClose={onCloseOpenModal} onReload={onReload} />)
         }
         if (key === "email") {
             setRenderComponent(<Text>Cambiar email</Text>)
@@ -52,7 +56,7 @@ export const AccountOptions = () => {
   )
 }
 
-const getMenuOptions= (selectedComponent: (key: keyof selectedComponents) => void) => {
+const getMenuOptions= (selectedComponent: (key: keyof SelectedComponents) => void) => {
     return [
         {
             title: "Cambiar nombre y apellidos",

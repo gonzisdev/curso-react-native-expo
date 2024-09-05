@@ -11,6 +11,9 @@ export const UserLoggedScreen = () => {
 
   const [loading, setLoading] = useState(false)
   const [loadingText, setLoadingText] = useState('')
+  const [_, setReload] = useState(false)
+
+  const onReload = () => setReload(prevState => !prevState)
 
   const logout = async () => {
     const auth = getAuth()
@@ -23,7 +26,9 @@ export const UserLoggedScreen = () => {
         setLoading={setLoading} 
         setLoadingText={setLoadingText} 
       />
-      <AccountOptions />
+      <AccountOptions 
+        onReload={onReload}
+      />
       <Button 
         title="Cerrar sesión" 
         containerStyle={styles.btnStyles}

@@ -8,9 +8,10 @@ import Toast from 'react-native-toast-message'
 
 type ChangeDisplayNameFormProps = {
     onClose: () => void
+    onReload: () => void
 }
 
-export const ChangeDisplayNameForm = ({onClose}: ChangeDisplayNameFormProps) => {
+export const ChangeDisplayNameForm = ({onClose, onReload}: ChangeDisplayNameFormProps) => {
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -22,6 +23,7 @@ export const ChangeDisplayNameForm = ({onClose}: ChangeDisplayNameFormProps) => 
                 const user = getAuth().currentUser
                 if (user) {
                     await updateProfile(user, {displayName})
+                    onReload()
                     onClose()
                 }
             } catch (error) {

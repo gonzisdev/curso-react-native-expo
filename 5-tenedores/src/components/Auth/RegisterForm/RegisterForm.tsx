@@ -35,7 +35,7 @@ export const RegisterForm = () => {
     }
   })
 
-  const showHiddenPassword = () => setShowPassword(prevState => !showPassword)
+  const showHiddenPassword = () => setShowPassword(prevState => !prevState)
   
   const handleSubmit = () => {
     formik.handleSubmit();
