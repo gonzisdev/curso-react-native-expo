@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { View } from 'react-native'
 import { ListItem, Icon, Text } from '@rneui/base'
 import { Modal } from '../Shared/Modal/Modal'
+import { ChangeDisplayNameForm } from './ChangeDisplayNameForm/ChangeDisplayNameForm'
 
 type selectedComponents = {
     displayName: string
@@ -18,7 +19,7 @@ export const AccountOptions = () => {
 
     const selectedComponent = (key: keyof selectedComponents) => {
         if (key === "displayName") {
-            setRenderComponent(<Text>Cambiar nombre y apellidos</Text>)
+            setRenderComponent(<ChangeDisplayNameForm onClose={onCloseOpenModal} />)
         }
         if (key === "email") {
             setRenderComponent(<Text>Cambiar email</Text>)
