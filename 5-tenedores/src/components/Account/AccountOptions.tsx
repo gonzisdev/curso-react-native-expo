@@ -16,6 +16,7 @@ export const AccountOptions = () => {
     const [renderCopmponent, setRenderComponent] = useState<JSX.Element | null>(null)
 
     const onCloseOpenModal = () => setShowModal(prevState => !showModal)
+    
 
     const selectedComponent = (key: keyof selectedComponents) => {
         if (key === "displayName") {
@@ -44,7 +45,7 @@ export const AccountOptions = () => {
             <Icon type={option.iconType} name={option.iconNameRight} color={option.iconColorRight} />
         </ListItem>
       ))}
-      <Modal show={showModal} close={() => onCloseOpenModal()}>
+      <Modal show={showModal} close={onCloseOpenModal}>
         {renderCopmponent}
       </Modal>
     </View>
