@@ -3,8 +3,11 @@ import { Input, Icon, Button } from '@rneui/base'
 import { styles } from './RegisterForm.styles'
 import { useFormik } from 'formik'
 import { initialValues, validationSchema } from './RegisterForm.data'
+import { useState } from 'react'
 
 export const RegisterForm = () => {
+
+  const [showPassword, setShowPassword] = useState(false)
 
   const formik = useFormik({
     initialValues: initialValues(),
@@ -14,6 +17,9 @@ export const RegisterForm = () => {
       console.log('formulario')
     }
   })
+
+  const showHiddenPassword = () => setShowPassword(prevState => !showPassword)
+  
 
   const handleSubmit = () => {
     formik.handleSubmit();
@@ -31,15 +37,15 @@ export const RegisterForm = () => {
       <Input 
         placeholder='Contraseña' 
         containerStyle={styles.input} 
-        secureTextEntry={true} 
-        rightIcon={<Icon type='material-community' name='eye-outline' iconStyle={styles.icon} />} 
+        secureTextEntry={showPassword ? false : true} 
+        rightIcon={<Icon type='material-community' name={showPassword ? 'eye-off-outline' : 'eye-outline'} iconStyle={styles.icon} onPress={showHiddenPassword} />} 
         errorMessage={formik.errors.password}
       />
       <Input 
         placeholder='Repetir contraseña' 
         containerStyle={styles.input} 
-        secureTextEntry={true} 
-        rightIcon={<Icon type='material-community' name='eye-outline' iconStyle={styles.icon} />} 
+        secureTextEntry={showPassword ? false : true} 
+        rightIcon={<Icon type='material-community' name={showPassword ? 'eye-off-outline' : 'eye-outline'} iconStyle={styles.icon} onPress={showHiddenPassword} />} 
         errorMessage={formik.errors.repeatPassword}
         />
       <Button 
