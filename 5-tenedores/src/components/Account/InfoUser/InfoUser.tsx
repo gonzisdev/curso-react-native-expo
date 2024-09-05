@@ -1,8 +1,9 @@
 import { View } from 'react-native'
 import { Avatar, Text } from '@rneui/base'
 import { getAuth, User } from 'firebase/auth'
-import { styles } from './InfoUser.styles'
+import { getStorage, ref, uploadBytes } from "firebase/storage"
 import * as ImagePicker from 'expo-image-picker'
+import { styles } from './InfoUser.styles'
 
 export const InfoUser = () => {
 
@@ -24,8 +25,15 @@ export const InfoUser = () => {
         }
     }
 
-    const uploadImage = (uri: string) => {
-        console.log(uri);
+    const uploadImage = async (uri: string) => {
+        const response = await fetch(uri)
+        const blob = await response.blob()
+
+        const storage = getStorage()
+        const storageRef = ref(storage, `avatar/${uid}`)
+        uploadBytes(storageRef, blob).then((snapshot) => {
+            console.log(snapshot.metadata)   
+        })
         
     }
 
