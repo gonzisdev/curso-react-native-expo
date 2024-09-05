@@ -5,6 +5,7 @@ import { styles } from './UserLoggedScreen.styles'
 import { getAuth, signOut } from 'firebase/auth'
 import { LoadingModal } from '../../../components/Shared/LoadingModal/LoadingModal'
 import { useState } from 'react'
+import { AccountOptions } from '../../../components/Account/AccountOptions'
 
 export const UserLoggedScreen = () => {
 
@@ -22,6 +23,7 @@ export const UserLoggedScreen = () => {
         setLoading={setLoading} 
         setLoadingText={setLoadingText} 
       />
+      <AccountOptions />
       <Button 
         title="Cerrar sesión" 
         containerStyle={styles.btnStyles}
