@@ -14,5 +14,5 @@ export const styles = StyleSheet.create({
     displayName: {
         fontWeight: "bold",
         paddingBottom: 5
-    }
+    },
 })

@@ -1,9 +1,10 @@
 import { View } from 'react-native'
 import { Avatar, Text } from '@rneui/base'
-import { getAuth, User } from 'firebase/auth'
-import { getStorage, ref, uploadBytes } from "firebase/storage"
+import { getAuth, User, updateProfile } from 'firebase/auth'
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import * as ImagePicker from 'expo-image-picker'
 import { styles } from './InfoUser.styles'
+import { useState } from 'react'
 
 type InfoUserProps = {
     setLoading: React.Dispatch<React.SetStateAction<boolean>>
@@ -16,6 +17,8 @@ export const InfoUser = ({setLoading, setLoadingText}: InfoUserProps) => {
     const user: User | null = auth.currentUser
   
     const { uid, photoURL, displayName, email } = user || {}
+
+    const [avatar, setAvatar] = useState(photoURL)
 
     const changeAvatar = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -43,10 +46,16 @@ export const InfoUser = ({setLoading, setLoadingText}: InfoUserProps) => {
         })
     }
 
-    const updatePhotoUrl = (imagePath: string) => {
+    const updatePhotoUrl = async (imagePath: string) => {
+        const storage = getStorage()
+        const imageRef = ref(storage, imagePath)
+        const imageUrl = await getDownloadURL(imageRef)
+        const auth = getAuth();
+        if (auth.currentUser) {
+            updateProfile(auth.currentUser, {photoURL: imageUrl})
+        }
+        setAvatar(imageUrl)
         setLoading(false)
-        console.log(imagePath);
-        
     }
 
   return (
@@ -54,9 +63,9 @@ export const InfoUser = ({setLoading, setLoadingText}: InfoUserProps) => {
       <Avatar 
         size="large" 
         rounded 
-        icon={{type: "material", name: "person"}}
+        icon={!avatar ? {type: "material", name: "person"} : undefined}
         containerStyle={styles.avatar}
-        source={photoURL ? {uri: photoURL} : undefined}
+        source={avatar ? {uri: avatar} : undefined}
       >
         <Avatar.Accessory size={24} onPress={changeAvatar} />
       </Avatar>
