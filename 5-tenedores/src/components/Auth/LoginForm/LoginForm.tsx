@@ -4,17 +4,35 @@ import { Input, Icon, Button } from '@rneui/base'
 import { styles } from './LoginForm.styles'
 import { useFormik } from 'formik'
 import { initialValues, validationSchema } from './LoginForm.data'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
+import Toast from 'react-native-toast-message'
+import { useNavigation } from '@react-navigation/native'
+import { screen } from '../../../utils/screenName'
 
 export const LoginForm = () => {
     
     const [showPassword, setShowPassword] = useState(false)
 
+    const navigation = useNavigation()
+
     const formik = useFormik({
         initialValues: initialValues(),
         validationSchema: validationSchema(),
         validateOnChange: false,
-        onSubmit: (formValue) => {
-
+        onSubmit: async (formValue) => {
+            try {
+                const auth = getAuth()
+                await signInWithEmailAndPassword(auth, formValue.email, formValue.password)
+                navigation.navigate(screen.account.account as never) // No hacer esto xD Tipar correctamente
+            } catch (error) {
+                console.log(error)
+                Toast.show({
+                    type: "error",
+                    position: "bottom",
+                    text1: "Usuario o contraseña incorrectos"
+                })
+                
+            }
         }
     })
 
