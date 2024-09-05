@@ -1,9 +1,10 @@
 import { useState } from 'react'
 import { View } from 'react-native'
-import { ListItem, Icon, Text } from '@rneui/base'
+import { ListItem, Icon } from '@rneui/base'
 import { Modal } from '../Shared/Modal/Modal'
 import { ChangeDisplayNameForm } from './ChangeDisplayNameForm/ChangeDisplayNameForm'
 import { ChangeEmailForm } from './ChangeEmailForm/ChangeEmailForm'
+import { ChangePasswordForm } from './ChangePasswordForm/ChangePasswordForm'
 
 type SelectedComponents = {
     displayName: string
@@ -31,7 +32,7 @@ export const AccountOptions = ({onReload}: AccountOptionsProps) => {
             setRenderComponent(<ChangeEmailForm onClose={onCloseOpenModal} onReload={onReload} />)
         }
         if (key === "password") {
-            setRenderComponent(<Text>Cambiar contraseña</Text>)
+            setRenderComponent(<ChangePasswordForm onClose={onCloseOpenModal} onReload={onReload} />)
         }
         onCloseOpenModal()
     }
