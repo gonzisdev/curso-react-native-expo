@@ -1,6 +1,7 @@
 import { View, ScrollView } from 'react-native'
 import { Text, Image } from '@rneui/base'
 import { styles } from './LoginScreen.styles'
+import { LoginForm } from '../../../components/Auth/LoginForm/LoginForm'
 import { useNavigation } from '@react-navigation/native'
 import { screen } from '../../../utils/screenName'
 
@@ -16,8 +17,10 @@ export const LoginScreen = () => {
     <ScrollView>
       <Image source={require("../../../../assets/img/5-tenedores-letras-icono-logo.png")} style={styles.image} />
       <View style={styles.content}>
-        <Text>Estamos en el login</Text>
-        <Text onPress={goToRegister} >Registrarse</Text>
+        <LoginForm />
+        <Text style={styles.textRegister} >
+          ¿Aún no tienes cuenta? <Text style={styles.btnRegister} onPress={goToRegister}>Registrarse</Text>
+        </Text>
       </View>
     </ScrollView>
   )
