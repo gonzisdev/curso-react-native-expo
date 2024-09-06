@@ -1,6 +1,6 @@
 import { View } from 'react-native'
 import { Button } from '@rneui/base'
-import { InfoForm } from '../../../components/Restaurants/AddRestaurant/InfoForm'
+import { InfoForm } from '../../../components/Restaurants/AddRestaurant/InfoForm/InfoForm'
 import { useFormik } from 'formik'
 import { styles } from './AddRestaurantScreen.styles'
 import { initialValues, validationSchema } from './AddRestaurantScreen.data'
