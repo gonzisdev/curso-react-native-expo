@@ -50,6 +50,27 @@ export const UploadImageForm = ({formik}: UploadImageFormProps) => {
         setLoading(false)
     }
 
+    const removeImage = (img: string) => {
+        Alert.alert(
+            "Eliminar imagen",
+            "¿Estás seguro de eliminar esta imagen?",
+            [
+                {
+                    text: "Cancelar",
+                    style: "cancel"
+                },
+                {
+                    text: "Eliminar",
+                    onPress: () =>{
+                        const result = formik.values.images.filter((image: string) => image !== img)
+                        formik.setFieldValue("images", result)
+                    }
+                }
+            ],
+            {cancelable: false}
+        )
+    }
+
   return (
     <>
       <ScrollView style={styles.viewImage} horizontal showsHorizontalScrollIndicator={false}>
@@ -65,6 +86,7 @@ export const UploadImageForm = ({formik}: UploadImageFormProps) => {
                 key={image}
                 source={{uri: image}}
                 containerStyle={styles.imageStyle}
+                onPress={() => removeImage(image)}
             />
         ))}
       </ScrollView>
