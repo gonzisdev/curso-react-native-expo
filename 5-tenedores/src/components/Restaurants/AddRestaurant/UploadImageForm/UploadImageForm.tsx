@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import { View, Alert } from 'react-native'
 import { FormikProps } from 'formik'
 import { Icon, Avatar, Text } from '@rneui/base'
 import * as ImagePicker from "expo-image-picker"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage"
 import { v4 as uuid} from "uuid"
+import { LoadingModal } from '../../../Shared/LoadingModal/LoadingModal'
 import { styles } from './UploadImageForm.styles'
 
 type UploadImageFormProps = {
@@ -11,6 +13,8 @@ type UploadImageFormProps = {
 }
 
 export const UploadImageForm = ({formik}: UploadImageFormProps) => {
+
+    const [loading, setLoading] = useState(false)
 
     const openGallery = async () => {
         const result = await ImagePicker.launchImageLibraryAsync({
@@ -20,6 +24,7 @@ export const UploadImageForm = ({formik}: UploadImageFormProps) => {
             quality: 1
         })
         if (!result.canceled) {
+            setLoading(true)
             const asset = result.assets[0]
             const uri = asset.uri
             uploadImage(uri)
@@ -33,8 +38,16 @@ export const UploadImageForm = ({formik}: UploadImageFormProps) => {
         const storage = getStorage()
         const storageRef = ref(storage, `restaurants/${uuid()}`)
         uploadBytes(storageRef, blob).then((snapshot) => {
-
+            updatePhotosRestaurant(snapshot.metadata.fullPath)
         })
+    }
+
+    const updatePhotosRestaurant = async (imagePath: string) => {
+        const storage = getStorage()
+        const imageRef = ref(storage, imagePath)
+        const imageUrl = await getDownloadURL(imageRef)
+        formik.setFieldValue("images", [...formik.values.images, imageUrl])
+        setLoading(false)
     }
 
   return (
@@ -45,8 +58,11 @@ export const UploadImageForm = ({formik}: UploadImageFormProps) => {
             name='camera' 
             color="#a7a7a7" 
             containerStyle={styles.containerIcon} 
-            onPress={openGallery}/>
+            onPress={openGallery}
+        />
       </View>
+      <Text style={styles.error}>{formik.errors.images?.toString()}</Text>
+      <LoadingModal show={loading} text='Subiendo imagen' />
     </>
   )
 }

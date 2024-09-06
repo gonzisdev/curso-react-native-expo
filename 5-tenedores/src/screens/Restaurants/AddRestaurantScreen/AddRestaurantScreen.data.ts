@@ -7,7 +7,8 @@ export const initialValues = () => {
         phone: "",
         email: "",
         description: "",
-        location: null
+        location: null,
+        images: []
     }
 }
 
@@ -18,6 +19,7 @@ export const validationSchema = () => {
         phone: Yup.string().email("Email no válido").required("Campo obligatorio"),
         email: Yup.string().required("Campo obligatorio"),
         description: Yup.string().required("Campo obligatorio"),
-        location: Yup.object().required("La localización es requerida")
+        location: Yup.object().required("La localización es requerida"),
+        images: Yup.array().min(1, "Se requiere una imagen como mínimo").required("La imagen es requerida")
     })
 }
