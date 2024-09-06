@@ -10,6 +10,4 @@ const firebaseConfig = {
   appId: process.env.EXPO_PUBLIC_APP_ID
 }
 
-export const initFirebase = () => {
-    return initializeApp(firebaseConfig)
-}
+export const initFirebase = () => initializeApp(firebaseConfig)

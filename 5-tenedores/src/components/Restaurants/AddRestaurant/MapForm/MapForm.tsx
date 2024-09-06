@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { Text } from 'react-native'
+import { View } from 'react-native'
 import { styles } from './MapForm.styles'
 import * as Location from "expo-location"
 import { Modal } from '../../../Shared/Modal/Modal'
 import Toast from 'react-native-toast-message'
+import MapView, { Marker } from 'react-native-maps'
 
 type MapFormProps = {
     show: boolean,
@@ -42,7 +43,11 @@ export const MapForm = ({show, close}: MapFormProps) => {
 
   return (
     <Modal show={show} close={close}>
-        <Text>Mapform</Text>
+        <View>
+            <MapView initialRegion={location} showsUserLocation={true} style={styles.mapStyle} onRegionChange={(locationTemp) => setLocation(locationTemp) }>
+                <Marker coordinate={location} />
+            </MapView>
+        </View>
     </Modal>
   )
 }
