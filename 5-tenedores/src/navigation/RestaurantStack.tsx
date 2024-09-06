@@ -1,7 +1,7 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import { screen } from "../utils/screenName"
-import { RestaurantsScreen } from "../screens/Restaurants/RestaurantsScreen"
-import { AddRestaurantScreen } from "../screens/Restaurants/AddRestaurantScreen"
+import { RestaurantsScreen } from "../screens/Restaurants/RestaurantsScreen/RestaurantsScreen"
+import { AddRestaurantScreen } from "../screens/Restaurants/AddRestaurantScreen/AddRestaurantScreen"
 
 const Stack = createNativeStackNavigator()
 
