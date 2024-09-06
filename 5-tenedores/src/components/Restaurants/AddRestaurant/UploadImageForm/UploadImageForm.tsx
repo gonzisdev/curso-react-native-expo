@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { View, Alert } from 'react-native'
+import { ScrollView, Alert } from 'react-native'
 import { FormikProps } from 'formik'
 import { Icon, Avatar, Text } from '@rneui/base'
 import * as ImagePicker from "expo-image-picker"
@@ -52,7 +52,7 @@ export const UploadImageForm = ({formik}: UploadImageFormProps) => {
 
   return (
     <>
-      <View style={styles.viewImage}>
+      <ScrollView style={styles.viewImage} horizontal showsHorizontalScrollIndicator={false}>
         <Icon 
             type='material-community' 
             name='camera' 
@@ -67,7 +67,7 @@ export const UploadImageForm = ({formik}: UploadImageFormProps) => {
                 containerStyle={styles.imageStyle}
             />
         ))}
-      </View>
+      </ScrollView>
       <Text style={styles.error}>{formik.errors.images?.toString()}</Text>
       <LoadingModal show={loading} text='Subiendo imagen' />
     </>
