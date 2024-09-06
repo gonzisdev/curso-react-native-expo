@@ -54,7 +54,7 @@ export const InfoForm = ({formik}: InfoFormProps) => {
           errorMessage={formik.errors.description?.toString()}
         />
       </View>
-      <MapForm show={showMap} close={onOpenCloseMap}/>
+      <MapForm show={showMap} close={onOpenCloseMap} formik={formik} />
     </>
   )
 }
