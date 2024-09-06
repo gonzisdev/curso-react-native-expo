@@ -60,6 +60,13 @@ export const UploadImageForm = ({formik}: UploadImageFormProps) => {
             containerStyle={styles.containerIcon} 
             onPress={openGallery}
         />
+        {formik.values.images.map((image: string) => (
+            <Avatar
+                key={image}
+                source={{uri: image}}
+                containerStyle={styles.imageStyle}
+            />
+        ))}
       </View>
       <Text style={styles.error}>{formik.errors.images?.toString()}</Text>
       <LoadingModal show={loading} text='Subiendo imagen' />
