@@ -1,6 +1,7 @@
 import { View } from 'react-native'
 import { Button } from '@rneui/base'
 import { InfoForm } from '../../../components/Restaurants/AddRestaurant/InfoForm/InfoForm'
+import { UploadImageForm } from '../../../components/Restaurants/AddRestaurant/UploadImageForm/UploadImageForm'
 import { useFormik } from 'formik'
 import { styles } from './AddRestaurantScreen.styles'
 import { initialValues, validationSchema } from './AddRestaurantScreen.data'
@@ -23,6 +24,9 @@ export const AddRestaurantScreen = () => {
   return (
     <View>
       <InfoForm
+        formik={formik}
+      />
+      <UploadImageForm
         formik={formik}
       />
       <Button 
