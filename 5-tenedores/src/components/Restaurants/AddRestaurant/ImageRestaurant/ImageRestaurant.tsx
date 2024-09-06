@@ -10,8 +10,6 @@ type ImageRestaurantProps = {
 export const ImageRestaurant = ({formik}: ImageRestaurantProps) => {
 
     const primaryImage = formik.values.images[0]
-    console.log(primaryImage);
-    
 
   return (
     <View style={styles.content}>
