@@ -3,6 +3,7 @@ import { View, Text } from "react-native"
 import { Icon } from "@rneui/base"
 import { getAuth, onAuthStateChanged, User } from "firebase/auth"
 import { collection, DocumentData, onSnapshot, orderBy, query, QueryDocumentSnapshot } from "firebase/firestore"
+import { LoadingModal } from "../../../components/Shared/LoadingModal/LoadingModal"
 import { db } from "../../../utils/firebase"
 import { screen } from "../../../utils/screenName"
 import { styles } from "./RestaurantsScreen.styles"
@@ -41,17 +42,21 @@ export const RestaurantsScreen = ({navigation}: RestaurantsScreenProps) => {
 
   return (
     <View style={styles.content}>
-        <Text>Estamos en la screen Restaurants</Text>
-        {currentUser && (
-          <Icon 
-            reverse
-            type="material-community"
-            name="plus"
-            color="#00a680"
-            containerStyle={styles.btnContainer}
-            onPress={goToAddRestaurant}
-          />
-        )}
+      {!restaurants ? (
+        <LoadingModal show text="Cargando" />
+      ): (
+        <Text>Lista de Restaurants</Text>
+      )}
+      {currentUser && (
+        <Icon 
+          reverse
+          type="material-community"
+          name="plus"
+          color="#00a680"
+          containerStyle={styles.btnContainer}
+          onPress={goToAddRestaurant}
+        />
+      )}
     </View>
   )
 }
