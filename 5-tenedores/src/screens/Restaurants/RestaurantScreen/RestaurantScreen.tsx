@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { ScrollView, Dimensions } from 'react-native'
 import { doc, onSnapshot, collection, query, where, orderBy } from "firebase/firestore"
 import { Carousel } from '../../../components/Shared/Carousel/Carousel'
+import { Loading } from '../../../components/Shared/Loading/Loading'
 import { styles } from './RestaurantScreen.styles'
 import { db } from '../../../utils/firebase'
 
@@ -39,7 +40,7 @@ export const RestaurantScreen = ({route}: RestaurantScreenProps) => {
         })
     }, [route.params.id])
     
-    if (!restaurant) return null
+    if (!restaurant) return <Loading show text="Cargando restaurantes" />
 
   return (
     <ScrollView style={styles.content}>
