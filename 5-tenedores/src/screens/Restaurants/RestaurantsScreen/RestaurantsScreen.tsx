@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react"
 import { View, Text } from "react-native"
 import { Icon } from "@rneui/base"
 import { getAuth, onAuthStateChanged, User } from "firebase/auth"
+import { collection, DocumentData, onSnapshot, orderBy, query, QueryDocumentSnapshot } from "firebase/firestore"
+import { db } from "../../../utils/firebase"
 import { screen } from "../../../utils/screenName"
 import { styles } from "./RestaurantsScreen.styles"
-import { useEffect, useState } from "react"
 
 type RestaurantsScreenProps = {  // No hacer esto xD Tipar correctamente
   navigation: {
@@ -14,11 +16,22 @@ type RestaurantsScreenProps = {  // No hacer esto xD Tipar correctamente
 export const RestaurantsScreen = ({navigation}: RestaurantsScreenProps) => {
 
   const [currentUser, setCurrentUser] = useState<User | null>(null)
+  const [restaurants, setResturants] = useState<QueryDocumentSnapshot<DocumentData>[]>([])
 
   useEffect(() => {
     const auth = getAuth()
     onAuthStateChanged(auth , (user) => {
       setCurrentUser(user)
+    })
+  }, [])
+
+  useEffect(() => {
+    const q = query(
+      collection(db, "restaurants"),
+      orderBy("createdAt", "desc")
+    )
+    onSnapshot(q, (snapshot) => {
+      setResturants(snapshot.docs)
     })
   }, [])
   
