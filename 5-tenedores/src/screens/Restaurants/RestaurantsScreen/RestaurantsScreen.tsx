@@ -4,6 +4,7 @@ import { Icon } from "@rneui/base"
 import { getAuth, onAuthStateChanged, User } from "firebase/auth"
 import { collection, DocumentData, onSnapshot, orderBy, query, QueryDocumentSnapshot } from "firebase/firestore"
 import { LoadingModal } from "../../../components/Shared/LoadingModal/LoadingModal"
+import { ListRestaurants } from "../../../components/Restaurants/ListRestaurants/ListRestaurants"
 import { db } from "../../../utils/firebase"
 import { screen } from "../../../utils/screenName"
 import { styles } from "./RestaurantsScreen.styles"
@@ -45,7 +46,7 @@ export const RestaurantsScreen = ({navigation}: RestaurantsScreenProps) => {
       {!restaurants ? (
         <LoadingModal show text="Cargando" />
       ): (
-        <Text>Lista de Restaurants</Text>
+        <ListRestaurants restaurants={restaurants} />
       )}
       {currentUser && (
         <Icon 
