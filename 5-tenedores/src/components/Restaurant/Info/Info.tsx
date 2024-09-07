@@ -1,5 +1,6 @@
 import { View } from 'react-native'
 import { Text, ListItem, Icon } from '@rneui/base'
+import { Map } from '../../Shared/Map/Map'
 import { styles } from './Info.styles'
 
 type InfoProps = { // Crear tipo para restaurante, no hacerlo así
@@ -10,7 +11,12 @@ type InfoProps = { // Crear tipo para restaurante, no hacerlo así
         phone: string
         email: string
         description: string
-        location: null
+        location: {
+            latitude: number
+            longitude: number
+            latitudeDelta: number
+            longitudeDelta: number
+        }
         images: never[]
         createdAt: Date
     }
@@ -39,6 +45,7 @@ export const Info = ({restaurant}: InfoProps) => {
   return (
     <View style={styles.content}>
       <Text style={styles.title}>Información sobre el restaurante</Text>
+      <Map location={restaurant.location} name={restaurant.name} />
       {listInfo.map((item, index) => (
         <ListItem key={index} bottomDivider>
             <Icon type={item.iconType} name={item.iconName} color="#00a680" />

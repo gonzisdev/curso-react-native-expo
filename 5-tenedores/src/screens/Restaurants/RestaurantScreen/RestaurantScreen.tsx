@@ -8,7 +8,6 @@ import { db } from '../../../utils/firebase'
 import { Header } from '../../../components/Restaurant/Header/Header'
 import { Info } from '../../../components/Restaurant/Info/Info'
 
-
 type RestaurantData = { // Mejor crear un tipo global, no de manera local en el componente
     id: string
     name: string
