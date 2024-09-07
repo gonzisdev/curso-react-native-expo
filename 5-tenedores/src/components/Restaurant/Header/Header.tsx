@@ -10,7 +10,12 @@ type HeaderProps = { // Crear tipo para restaurante, no hacerlo así
         phone: string
         email: string
         description: string
-        location: null
+        location: {
+          latitude: number
+          longitude: number
+          latitudeDelta: number
+          longitudeDelta: number
+        }
         images: never[]
         createdAt: Date
     }

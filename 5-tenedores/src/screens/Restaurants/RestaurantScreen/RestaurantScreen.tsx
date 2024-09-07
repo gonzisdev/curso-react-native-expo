@@ -15,7 +15,12 @@ type RestaurantData = { // Mejor crear un tipo global, no de manera local en el 
     phone: string
     email: string
     description: string
-    location: null
+    location: {
+        latitude: number
+        longitude: number
+        latitudeDelta: number
+        longitudeDelta: number
+    }
     images: never[]
     createdAt: Date
 }
