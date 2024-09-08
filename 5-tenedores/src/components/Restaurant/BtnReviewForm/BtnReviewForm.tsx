@@ -28,12 +28,27 @@ export const BtnReviewForm = ({idRestaurant}: BtnReviewFormProps) => {
         }) // No hacer esto xD Tipar correctamente
     }
 
+    const goToAddReview = () => {
+        navigation.navigate(screen.restaurant.addReviewRestaurant, {
+            idRestaurant
+        }) // No hacer esto xD Tipar correctamente
+    }
+
   return (
     <View style={styles.content}>
       {hasLogged ? (
-        <Button title="Escribe una opinión" />
+        <Button 
+            title="Escribe una opinión" 
+            icon={{type: "material-community", name: "square-edit-outline", color: "#00a680"}} 
+            buttonStyle={styles.button}
+            titleStyle={styles.btnText}
+            onPress={goToAddReview}
+        />
       ) : (
-        <Text style={styles.text} onPress={goToLogin}>Para escribir una opinión es necesario estar logeado, {""}
+        <Text 
+            style={styles.text} 
+            onPress={goToLogin}
+        >Para escribir una opinión es necesario estar logeado, {""}
             <Text style={styles.textClick}>pulsa AQUÍ para iniciar sesión</Text>
         </Text>
       )}
