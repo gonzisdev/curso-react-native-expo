@@ -19,6 +19,7 @@ type InfoProps = { // Crear tipo para restaurante, no hacerlo así
         }
         images: never[]
         createdAt: Date
+        ratingMedia: number
     }
 }
 
