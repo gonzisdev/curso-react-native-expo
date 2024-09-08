@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { ScrollView, Dimensions } from 'react-native'
-import { doc, onSnapshot, collection, query, where, orderBy } from "firebase/firestore"
+import { doc, onSnapshot } from "firebase/firestore"
 import { Carousel } from '../../../components/Shared/Carousel/Carousel'
 import { Loading } from '../../../components/Shared/Loading/Loading'
 import { styles } from './RestaurantScreen.styles'
@@ -9,6 +9,7 @@ import { Header } from '../../../components/Restaurant/Header/Header'
 import { Info } from '../../../components/Restaurant/Info/Info'
 import { BtnReviewForm } from '../../../components/Restaurant/BtnReviewForm/BtnReviewForm'
 import Reviews from '../../../components/Restaurant/Reviews/Reviews'
+import { BtnFavorite } from '../../../components/Restaurant/BtnFavorite/BtnFavorite'
 
 type RestaurantData = { // Mejor crear un tipo global, no de manera local en el componente
     id: string
@@ -58,6 +59,7 @@ export const RestaurantScreen = ({route}: RestaurantScreenProps) => {
       <Info restaurant={restaurant} />
       <BtnReviewForm idRestaurant={route.params.id} />
       <Reviews idRestaurant={route.params.id} />
+      <BtnFavorite idRestaurant={route.params.id} />
     </ScrollView>
   )
 }
