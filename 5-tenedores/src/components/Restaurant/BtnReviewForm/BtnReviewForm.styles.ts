@@ -19,5 +19,8 @@ export const styles = StyleSheet.create({
     textClick: {
         color: "#00a680",
         fontWeight: "bold"
+    },
+    textSendReview: {
+        textAlign: "center"
     }
 })

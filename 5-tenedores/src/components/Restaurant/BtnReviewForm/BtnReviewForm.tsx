@@ -2,9 +2,11 @@ import { useState, useEffect } from 'react'
 import { View } from 'react-native'
 import { Text, Button } from '@rneui/base'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import  { query, collection, where, onSnapshot} from "firebase/firestore"
 import { useNavigation } from '@react-navigation/native'
 import { styles } from './BtnReviewForm.styles'
 import { screen } from '../../../utils/screenName'
+import { db } from '../../../utils/firebase'
 
 type BtnReviewFormProps = {
     idRestaurant: string // Mejor crear tipo de Restaurant de manera global y hacer look up
@@ -13,6 +15,7 @@ type BtnReviewFormProps = {
 export const BtnReviewForm = ({idRestaurant}: BtnReviewFormProps) => {
 
     const [hasLogged, setHasLogged] = useState(false)
+    const [hasReview, setHasReview] = useState(false)
     const auth = getAuth()
     const navigation = useNavigation()
 
@@ -21,6 +24,21 @@ export const BtnReviewForm = ({idRestaurant}: BtnReviewFormProps) => {
             setHasLogged(user ? true : false)
         })
     }, [])
+
+    useEffect(() => {
+        if (hasLogged) {
+            const q = query(
+                collection(db, "reviews"),
+                where("idRestaurant", "==", idRestaurant),
+                where("idUser", "==", auth.currentUser?.uid)
+            )
+            onSnapshot(q, (snapshot) => {
+                if (snapshot.docs.length) {
+                    setHasReview(true)
+                }
+            })
+        }
+    }, [hasLogged])
 
     const goToLogin = () => {
         navigation.navigate(screen.account.tab, {
@@ -32,6 +50,14 @@ export const BtnReviewForm = ({idRestaurant}: BtnReviewFormProps) => {
         navigation.navigate(screen.restaurant.addReviewRestaurant, {
             idRestaurant
         }) // No hacer esto xD Tipar correctamente
+    }
+
+    if (hasLogged && hasReview) {
+        return (
+            <View style={styles.content}>
+                <Text style={styles.textSendReview}>Ya has enviado una review a este restaurante</Text>
+            </View>
+        )
     }
 
   return (
