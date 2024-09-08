@@ -1,8 +1,13 @@
 import { View } from 'react-native'
 import { AirbnbRating, Input, Button } from '@rneui/themed'
 import { useFormik } from 'formik'
-import { styles } from './AddReviewRestaurantScreen.styles'
 import { initialValues, validationSchema } from './AddReviewRestaurantScreen.data'
+import { getAuth } from 'firebase/auth'
+import { doc, setDoc, query, collection, where, onSnapshot, updateDoc } from 'firebase/firestore'
+import { db } from '../../../utils/firebase'
+import { v4 as uuid } from 'uuid'
+import Toast from 'react-native-toast-message'
+import { styles } from './AddReviewRestaurantScreen.styles'
 
 type AddReviewRestaurantScreenProps = { // No hacer esto xD Tipar correctamente
     route: {
@@ -19,7 +24,25 @@ export const AddReviewRestaurantScreen = ({route}: AddReviewRestaurantScreenProp
         validationSchema: validationSchema(),
         validateOnChange: false,
         onSubmit: async (formValue) => {
-
+            try {
+                const auth = getAuth()
+                const idDoc = uuid()
+                const newData = {
+                    ...formValue, 
+                    id: idDoc, 
+                    idRestaurant: route.params.idRestaurant, 
+                    idUser: auth.currentUser?.uid, 
+                    avatar: auth.currentUser?.photoURL,
+                    createdAt: new Date()
+                }
+                await setDoc(doc(db, "reviews", idDoc), newData)
+            } catch (error) {
+                Toast.show({
+                    type: "error",
+                    position: "bottom",
+                    text1: "Error al enviar la review"
+                })
+            }
         }
     })
 
