@@ -8,6 +8,7 @@ import { db } from '../../../utils/firebase'
 import { Header } from '../../../components/Restaurant/Header/Header'
 import { Info } from '../../../components/Restaurant/Info/Info'
 import { BtnReviewForm } from '../../../components/Restaurant/BtnReviewForm/BtnReviewForm'
+import Reviews from '../../../components/Restaurant/Reviews/Reviews'
 
 type RestaurantData = { // Mejor crear un tipo global, no de manera local en el componente
     id: string
@@ -24,6 +25,7 @@ type RestaurantData = { // Mejor crear un tipo global, no de manera local en el 
     }
     images: never[]
     createdAt: Date
+    ratingMedia: number
 }
 
 type RestaurantScreenProps = { // No hacer esto xD Tipar correctamente
@@ -54,7 +56,8 @@ export const RestaurantScreen = ({route}: RestaurantScreenProps) => {
       <Carousel arrayImages={restaurant.images} width={width} height={250} />
       <Header restaurant={restaurant} />
       <Info restaurant={restaurant} />
-      <BtnReviewForm idRestaurant={restaurant.id} />
+      <BtnReviewForm idRestaurant={route.params.id} />
+      <Reviews idRestaurant={route.params.id} />
     </ScrollView>
   )
 }
