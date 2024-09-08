@@ -55,8 +55,16 @@ export const BtnFavorite = ({idRestaurant}: BtnFavoriteProps) => {
         }
     }
 
-    const removeFavorite = () => {
-
+    const removeFavorite = async () => {
+        try {
+            const response = await getFavorites()
+            response.forEach(async (item) => {
+                await deleteDoc(doc(db, "favorites", item.id))
+            })
+            onReload()
+        } catch (error) {
+            console.log(error)
+        }
     }
 
   return (
