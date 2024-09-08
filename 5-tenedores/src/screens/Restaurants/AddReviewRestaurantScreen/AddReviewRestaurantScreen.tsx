@@ -8,6 +8,7 @@ import { db } from '../../../utils/firebase'
 import { v4 as uuid } from 'uuid'
 import Toast from 'react-native-toast-message'
 import { styles } from './AddReviewRestaurantScreen.styles'
+import { useNavigation } from '@react-navigation/native'
 
 type AddReviewRestaurantScreenProps = { // No hacer esto xD Tipar correctamente
     route: {
@@ -18,6 +19,8 @@ type AddReviewRestaurantScreenProps = { // No hacer esto xD Tipar correctamente
 }
 
 export const AddReviewRestaurantScreen = ({route}: AddReviewRestaurantScreenProps) => {
+
+    const navigation = useNavigation()
 
     const formik = useFormik({
         initialValues: initialValues(),
@@ -36,6 +39,7 @@ export const AddReviewRestaurantScreen = ({route}: AddReviewRestaurantScreenProp
                     createdAt: new Date()
                 }
                 await setDoc(doc(db, "reviews", idDoc), newData)
+                await updateRestaurant()
             } catch (error) {
                 Toast.show({
                     type: "error",
@@ -45,6 +49,26 @@ export const AddReviewRestaurantScreen = ({route}: AddReviewRestaurantScreenProp
             }
         }
     })
+
+    const updateRestaurant = async () => {
+        const q = query(
+            collection(db, "reviews"),
+            where("idRestaurant", "==", route.params.idRestaurant)
+        )
+        onSnapshot(q, async (snapshot) => {
+            const reviews = snapshot.docs
+            const arrayStars = reviews.map(review => {
+                return review.data().rating
+            })
+            const sumStars = arrayStars.reduce((acc, rating) => acc + rating, 0)
+            const media = sumStars / arrayStars.length
+            const restaurantRef = doc(db, "restaurants", route.params.idRestaurant)
+            await updateDoc(restaurantRef, {
+                ratingMedia: media
+            })
+            navigation.goBack()
+        })
+    }
 
     const handleSubmit = () => {
         formik.handleSubmit()
