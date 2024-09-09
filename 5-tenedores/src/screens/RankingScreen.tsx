@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { View, Text } from 'react-native'
+import { ScrollView, Text } from 'react-native'
 import { collection, query, orderBy, onSnapshot, limit, QueryDocumentSnapshot, DocumentData } from 'firebase/firestore'
 import { db } from '../utils/firebase'
+import { RestaurantRanking } from '../components/Restaurants/RestaurantRanking/RestaurantRanking'
 
 export const RankingScreen = () => {
 
@@ -19,8 +20,10 @@ export const RankingScreen = () => {
   }, [])
 
   return (
-    <View>
-      <Text>RankingScreen</Text>
-    </View>
+    <ScrollView>
+      {restaurants.map((restaurant, index) => (
+        <RestaurantRanking key={index} index={index} restaurant={restaurant.data()}/>
+      ))}
+    </ScrollView>
   )
 }
