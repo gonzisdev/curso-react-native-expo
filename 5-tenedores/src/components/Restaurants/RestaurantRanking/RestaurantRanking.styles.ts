@@ -17,6 +17,13 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "space-between"
     },
+    nameContent: {
+        flexDirection: "row",
+        justifyContent: "center"
+    },
+    medal: {
+        marginRight: 5
+    },
     name:{
         fontSize: 18,
         fontWeight: "bold"

@@ -9,12 +9,29 @@ type RestaurantRankingProps = {
 }
 
 export const RestaurantRanking = ({index, restaurant}: RestaurantRankingProps) => {
+
+    const renderMedal = () => {
+        if (index > 2) return null
+
+        let color = ""
+        if (index === 0) color = "#ffd700"
+        if (index === 1) color = "#bebebe"
+        if (index === 2) color = "#cd7f32"
+
+        return (
+            <Icon type='material-community' name='medal-outline' color={color} containerStyle={styles.medal} />
+        )
+    }
+
   return (
     <TouchableOpacity onPress={() => {}}>
       <View style={styles.content}>
         <Image source={{uri: restaurant.images[0]}} style={styles.image} />
         <View style={styles.infoContent}>
-            <Text style={styles.name}>{restaurant.name}</Text>
+            <View style={styles.nameContent}>
+                {renderMedal()}
+                <Text style={styles.name}>{restaurant.name}</Text>
+            </View>
             <Rating imageSize={15} readonly startingValue={restaurant.ratingMedia} />
         </View>
         <Text style={styles.description}>{restaurant.description}</Text>
