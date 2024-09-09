@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native'
 import { screen } from '../../../utils/screenName'
 import { styles } from './UserNotLogged.styles'
 
-export default function UserNotLogged() {
+export const UserNotLogged = () => {
 
     const navigation = useNavigation()
 
