@@ -2,6 +2,8 @@ import { View, TouchableOpacity } from 'react-native'
 import { Image, Text, Rating, Icon } from '@rneui/base'
 import { DocumentData } from 'firebase/firestore'
 import { styles } from './RestaurantRanking.styles'
+import { useNavigation } from '@react-navigation/native'
+import { screen } from '../../../utils/screenName'
 
 type RestaurantRankingProps = {
     index: number
@@ -9,6 +11,8 @@ type RestaurantRankingProps = {
 }
 
 export const RestaurantRanking = ({index, restaurant}: RestaurantRankingProps) => {
+
+    const navigation = useNavigation()
 
     const renderMedal = () => {
         if (index > 2) return null
@@ -23,8 +27,17 @@ export const RestaurantRanking = ({index, restaurant}: RestaurantRankingProps) =
         )
     }
 
+    const goToRestaurant = () => {
+        navigation.navigate(screen.restaurant.tab, {
+            screen: screen.restaurant.restaurant,
+            params: {
+                id: restaurant.id
+            }
+        })
+    }
+
   return (
-    <TouchableOpacity onPress={() => {}}>
+    <TouchableOpacity onPress={goToRestaurant}>
       <View style={styles.content}>
         <Image source={{uri: restaurant.images[0]}} style={styles.image} />
         <View style={styles.infoContent}>
