@@ -4,6 +4,8 @@ import { DocumentData } from 'firebase/firestore'
 import { styles } from './RestaurantFavorite.styles'
 import { useNavigation } from '@react-navigation/native'
 import { screen } from '../../../utils/screenName'
+import { doc, deleteDoc } from 'firebase/firestore'
+import { db } from '../../../utils/firebase'
 
 
 type RestaurantFavoriteProps = {
@@ -23,8 +25,12 @@ export const RestaurantFavorite = ({restaurant}: RestaurantFavoriteProps) => {
         })
     }
 
-    const onRemoveFavorite = () => {
-
+    const onRemoveFavorite = async () => {
+        try {
+            await deleteDoc(doc(db, "favorites", restaurant.idFavorite))
+        } catch (error) {
+            console.log(error)
+        }
     }
 
   return (
