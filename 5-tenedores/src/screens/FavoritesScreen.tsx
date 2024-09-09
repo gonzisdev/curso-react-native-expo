@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react"
 import { View, Text } from "react-native"
 import { UserNotLogged } from "../components/Favorites/UserNotLogged/UserNotLogged"
+import { NotFoundRestaurants } from "../components/Favorites/NotFoundRestaurants/NotFoundRestaurants"
+import { Loading } from "../components/Shared/Loading/Loading"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { doc, getDoc, collection, query, where, onSnapshot, DocumentData } from "firebase/firestore"
 import { db } from "../utils/firebase"
@@ -19,9 +21,10 @@ export const FavoritesScreen = () => {
   }, [])
 
   useEffect(() => {
+    if (!auth.currentUser) return;
     const q = query(
       collection(db, "favorites"),
-      where("idUser", "==", auth.currentUser?.uid)
+      where("idUser", "==", auth.currentUser.uid)
     )
     onSnapshot(q, async (snapshot) => {
       let restaurantArray = []
@@ -40,6 +43,8 @@ export const FavoritesScreen = () => {
   }, [])
 
   if (!hasLogged) return <UserNotLogged />
+  if (!restaurants) return <Loading show text="Cargando" />
+  if (restaurants.length === 0) return <NotFoundRestaurants />
 
   return (
     <View>
